@@ -12,9 +12,9 @@ public class IndexableDataSource: ChainableDataSource {
    
     private let indexedSelector: Selector
     
-    init(dataSource: ChainableDataSource, indexedSelector: Selector) {
+    init(_ dataSource: ChainableDataSource, indexedSelector: Selector) {
         self.indexedSelector = indexedSelector
-        super.init(collection: dataSource.collection, cellCreator: dataSource.cellCreator)
+        super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
         self.dataSource = dataSource
         collection = populate(dataSource.collection)
         dataSource.registerForChanges() {
@@ -24,7 +24,7 @@ public class IndexableDataSource: ChainableDataSource {
     
     // MARK: UITableViewDataSource
     
-    public override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+    public override func sectionIndexTitlesForTableView(tableView: UITableView) -> [Element]! {
         return UILocalizedIndexedCollation.currentCollation().sectionIndexTitles
     }
     
@@ -38,7 +38,7 @@ public class IndexableDataSource: ChainableDataSource {
     
     // MARK: Helpers
     
-    private func populate(sections: [[AnyObject]]) -> [[AnyObject]] {
+    private func populate(sections: [[Element]]) -> [[Element]] {
         
         // Uses ObjC mutable collections since Swift is too slow for large data sets.
         let count = UILocalizedIndexedCollation.currentCollation().sectionTitles.count
@@ -59,11 +59,11 @@ public class IndexableDataSource: ChainableDataSource {
         }
 
         // Sorts the buckets.
-        var swiftSections = [[AnyObject]]()
+        var swiftSections = [[Element]]()
         
         for index in 0..<count {
-            let list = newSections[index] as! [AnyObject]
-            let sorted = UILocalizedIndexedCollation.currentCollation().sortedArrayFromArray(list, collationStringSelector: self.indexedSelector) as [AnyObject]
+            let list = newSections[index] as! [Element]
+            let sorted = UILocalizedIndexedCollation.currentCollation().sortedArrayFromArray(list, collationStringSelector: self.indexedSelector) as [Element]
             swiftSections += [sorted]
         }
         

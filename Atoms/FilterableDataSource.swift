@@ -10,8 +10,8 @@ import UIKit
 
 public class FilterableDataSource: ChainableDataSource {
     
-    public typealias Context = AnyObject
-    public typealias Filter = ((Context?, [[AnyObject]]) -> [[AnyObject]])
+    public typealias Context = Element
+    public typealias Filter = ((Context?, [[Element]]) -> [[Element]])
     
     var context: Context? = nil {
         didSet(oldValue) {
@@ -20,9 +20,9 @@ public class FilterableDataSource: ChainableDataSource {
     }
     private let filter: Filter
     
-    init(dataSource: ChainableDataSource, filter: Filter) {
+    init(_ dataSource: ChainableDataSource, filter: Filter) {
         self.filter = filter
-        super.init(collection: dataSource.collection, cellCreator: dataSource.cellCreator)
+        super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
         self.dataSource = dataSource
         dataSource.registerForChanges() {
             self.update()

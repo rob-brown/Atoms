@@ -12,13 +12,13 @@ public class ChainableDataSource: BaseDataSource {
     
     internal var dataSource: ChainableDataSource?
     
-    override init(collection: [[AnyObject]], cellCreator: CellCreator) {
-        super.init(collection: collection, cellCreator: cellCreator)
+    override init(_ collection: [[Element]], cellCreator: CellCreator) {
+        super.init(collection, cellCreator: cellCreator)
     }
     
     // MARK: Forwarded UITableViewDataSource
     
-    public func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+    public func sectionIndexTitlesForTableView(tableView: UITableView) -> [Element]! {
         if let dataSource = dataSource {
             return dataSource.sectionIndexTitlesForTableView(tableView)
         }

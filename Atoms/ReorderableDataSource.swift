@@ -8,17 +8,33 @@
 
 import UIKit
 
-class ReorderableDataSource: ChainableDataSource {
+public class ReorderableDataSource: ChainableDataSource {
     
-    
-    // TODO: 
-    
-    init(dataSource: ChainableDataSource) {
-        super.init(collection: dataSource.collection, cellCreator: dataSource.cellCreator)
+    init(_ dataSource: ChainableDataSource) {
+        super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
         self.dataSource = dataSource
         dataSource.registerForChanges() {
-//            self.update()
+            self.update()
         }
     }
     
+    // MARK: UITableViewDataSource
+    
+    public override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    public override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    public override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        move(from: sourceIndexPath, to: destinationIndexPath)
+    }
+    
+    // MARK: Helpers
+    
+    private func update() {
+        collection = dataSource!.collection
+    }
 }

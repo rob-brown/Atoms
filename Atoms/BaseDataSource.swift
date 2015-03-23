@@ -9,29 +9,45 @@
 import UIKit
 
 public class BaseDataSource: NSObject, UITableViewDataSource, UICollectionViewDataSource {
-    public typealias CellCreator = ((Any, NSIndexPath, AnyObject) -> Any)
+    public typealias Element = AnyObject
+    public typealias CellCreator = ((Any, NSIndexPath, Element) -> Any)
     public typealias SupplementCreator = ((Any, NSIndexPath, String) -> Any)
     public typealias ChangeUpdater = (()->())
     
     var cellCreator: CellCreator
-    var collection: [[AnyObject]] = [[]] {
+    var collection: [[Element]] = [[]] {
         didSet(oldValue) {
             notify()
         }
     }
     private var updateClosures: [ChangeUpdater] = []
     
-    init(collection: [[AnyObject]], cellCreator: CellCreator) {
+    init(_ collection: [[Element]], cellCreator: CellCreator) {
         self.collection = collection
         self.cellCreator = cellCreator
     }
     
-    public func lookUpObject(indexPath: NSIndexPath) -> AnyObject {
+    public func registerForChanges(closure: ChangeUpdater) {
+        updateClosures += [closure]
+    }
+    
+    // MARK: Collection Management
+    
+    public func lookUp(indexPath: NSIndexPath) -> Element {
         return collection[indexPath.section][indexPath.row]
     }
     
-    public func registerForChanges(closure: ChangeUpdater) {
-        updateClosures += [closure]
+    public func remove(indexPath: NSIndexPath) -> Element {
+        return collection[indexPath.section].removeAtIndex(indexPath.row)
+    }
+    
+    public func insert(object: Element, indexPath: NSIndexPath) {
+        return collection[indexPath.section].insert(object, atIndex: indexPath.row)
+    }
+    
+    public func move(#from: NSIndexPath, to: NSIndexPath) {
+        let item: Element = remove(from)
+        insert(item, indexPath: to)
     }
     
     // MARK: UITableViewDataSource
@@ -45,7 +61,7 @@ public class BaseDataSource: NSObject, UITableViewDataSource, UICollectionViewDa
     }
 
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let object: AnyObject = lookUpObject(indexPath)
+        let object: Element = lookUp(indexPath)
         return self.cellCreator(tableView, indexPath, object) as! UITableViewCell
     }
     
@@ -60,7 +76,7 @@ public class BaseDataSource: NSObject, UITableViewDataSource, UICollectionViewDa
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let object: AnyObject = lookUpObject(indexPath)
+        let object: Element = lookUp(indexPath)
         return self.cellCreator(collectionView, indexPath, object) as! UICollectionViewCell
     }
     
