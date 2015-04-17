@@ -186,22 +186,11 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
                     return collection
                 }
                 
-                var newSections = [[AnyObject]]()
+                let normalizedQuery = query.lowercaseString
                 
-                for list in collection {
-                    var newRows = [AnyObject]()
-                    
-                    for word in list {
-                        if let word = word as? String {
-                            if word.hasPrefix(query) {
-                                newRows += [word]
-                            }
-                        }
-                    }
-                    newSections += [newRows]
+                return collection.map() { section in
+                    return section.filter() {$0.lowercaseString.hasPrefix(normalizedQuery)}
                 }
-                
-                return newSections
             }
             
             return collection
