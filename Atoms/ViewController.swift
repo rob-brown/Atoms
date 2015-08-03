@@ -26,7 +26,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         let path = NSBundle.mainBundle().pathForResource("words.txt", ofType: nil)!
         let data = NSData(contentsOfFile: path)!
         let string = NSString(data: data, encoding: NSUTF8StringEncoding)
-        words = string?.componentsSeparatedByString("\n") as! [String]
+        words = (string?.componentsSeparatedByString("\n"))!
     }
     
     override func viewDidLayoutSubviews() {
@@ -84,7 +84,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         let tableView = UITableView(frame: CGRectZero, style: .Plain)
         tableView.delegate = self
         self.view.addSubview(tableView)
-        tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .Top, relatedBy: .Equal, toItem: self.topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0))
         self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: 0))
         self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .Left, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0))
@@ -114,7 +114,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         layout.itemSize = CGSizeMake(150, 50)
         layout.sectionInset = UIEdgeInsetsMake(20, 20, 0, 20)
         let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.collectionViewLayout = layout
         collectionView.backgroundColor = UIColor(white: 0.9, alpha: 1)
         self.view.addSubview(collectionView)
@@ -129,7 +129,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
             let searchBar = UISearchBar(frame: CGRectMake(0, 0, width, height))
             searchBar.placeholder = "Filter"
             searchBar.delegate = self
-            searchBar.setTranslatesAutoresizingMaskIntoConstraints(false)
+            searchBar.translatesAutoresizingMaskIntoConstraints = false
             collectionView.addSubview(searchBar)
             self.view.addSubview(searchBar)
             self.searchBar = searchBar

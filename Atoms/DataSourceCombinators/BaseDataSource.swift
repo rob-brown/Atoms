@@ -45,7 +45,7 @@ public class BaseDataSource: NSObject, UITableViewDataSource, UICollectionViewDa
         return collection[indexPath.section].insert(object, atIndex: indexPath.row)
     }
     
-    public func move(#from: NSIndexPath, to: NSIndexPath) {
+    public func move(from from: NSIndexPath, to: NSIndexPath) {
         let item: Element = remove(from)
         insert(item, indexPath: to)
     }
@@ -53,11 +53,11 @@ public class BaseDataSource: NSObject, UITableViewDataSource, UICollectionViewDa
     // MARK: UITableViewDataSource
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return count(self.collection)
+        return self.collection.count
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return count(self.collection[section])
+        return self.collection[section].count
     }
 
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -68,11 +68,11 @@ public class BaseDataSource: NSObject, UITableViewDataSource, UICollectionViewDa
     // MARK: UICollectionViewDataSource
     
     public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return count(self.collection)
+        return self.collection.count
     }
     
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return count(self.collection[section])
+        return self.collection[section].count
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

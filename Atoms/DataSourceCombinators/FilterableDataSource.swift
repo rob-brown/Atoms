@@ -32,21 +32,21 @@ public class FilterableDataSource: ChainableDataSource {
     // MARK: UITableViewDataSource
     
     public override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return count(collection)
+        return collection.count
     }
     
     public override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return count(collection[section])
+        return collection[section].count
     }
     
     // MARK: UICollectionViewDataSource
     
     public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return count(collection)
+        return collection.count
     }
     
     public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return count(collection[section])
+        return collection[section].count
     }
     
     // MARK: Helpers

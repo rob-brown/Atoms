@@ -10,6 +10,14 @@ import UIKit
 
 class SmartTableViewCell: UITableViewCell {
 
+    required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     class func nib() -> UINib? {
         let bundle = NSBundle(forClass: self)
         

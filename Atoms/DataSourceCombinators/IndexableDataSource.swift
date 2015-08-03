@@ -33,7 +33,7 @@ public class IndexableDataSource: ChainableDataSource {
     }
     
     public override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return UILocalizedIndexedCollation.currentCollation().sectionTitles[section] as? String
+        return UILocalizedIndexedCollation.currentCollation().sectionTitles[section]
     }
     
     // MARK: Helpers
