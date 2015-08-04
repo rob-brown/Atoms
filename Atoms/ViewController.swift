@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate {
     
+    @IBOutlet weak var optionsButton: UIBarButtonItem?
     weak var tableView: UITableView?
     weak var collectionView: UICollectionView?
     weak var searchBar: UISearchBar?
@@ -101,11 +102,13 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
             self.searchBar = searchBar
         }
         
-        if useReorder {
-            self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        }
-        else {
-            self.navigationItem.rightBarButtonItem = nil
+        if let optionsButton = optionsButton {
+            if useReorder {
+                self.navigationItem.rightBarButtonItems = [editButtonItem(), optionsButton]
+            }
+            else {
+                self.navigationItem.rightBarButtonItems = [optionsButton]
+            }
         }
     }
     
