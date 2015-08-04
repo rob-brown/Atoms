@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E12DD5201B6FAA5800C6C9EF /* MessageRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12DD51F1B6FAA5800C6C9EF /* MessageRouterTests.swift */; };
 		E14D841C1AAFC682008C9CB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D841B1AAFC682008C9CB1 /* AppDelegate.swift */; };
 		E14D841E1AAFC682008C9CB1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D841D1AAFC682008C9CB1 /* ViewController.swift */; };
 		E14D84211AAFC682008C9CB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E14D841F1AAFC682008C9CB1 /* Main.storyboard */; };
 		E14D84231AAFC682008C9CB1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E14D84221AAFC682008C9CB1 /* Images.xcassets */; };
 		E14D84261AAFC682008C9CB1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E14D84241AAFC682008C9CB1 /* LaunchScreen.xib */; };
-		E14D84321AAFC682008C9CB1 /* AtomsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D84311AAFC682008C9CB1 /* AtomsTests.swift */; };
+		E164287C1B6F134700867139 /* MessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E164287B1B6F134700867139 /* MessageRouter.swift */; };
 		E19069BE1AC1187400091A3F /* SmartCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19069BB1AC1187400091A3F /* SmartCollectionReusableView.swift */; };
 		E19069BF1AC1187400091A3F /* SmartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19069BC1AC1187400091A3F /* SmartCollectionViewCell.swift */; };
 		E19069C01AC1187400091A3F /* SmartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19069BD1AC1187400091A3F /* SmartTableViewCell.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E12DD51F1B6FAA5800C6C9EF /* MessageRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageRouterTests.swift; sourceTree = "<group>"; };
 		E14D84161AAFC682008C9CB1 /* Atoms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Atoms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E14D841A1AAFC682008C9CB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E14D841B1AAFC682008C9CB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,7 +51,7 @@
 		E14D84251AAFC682008C9CB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		E14D842B1AAFC682008C9CB1 /* AtomsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtomsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E14D84301AAFC682008C9CB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E14D84311AAFC682008C9CB1 /* AtomsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtomsTests.swift; sourceTree = "<group>"; };
+		E164287B1B6F134700867139 /* MessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageRouter.swift; path = Messaging/MessageRouter.swift; sourceTree = "<group>"; };
 		E19069BB1AC1187400091A3F /* SmartCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartCollectionReusableView.swift; path = SmartViews/SmartCollectionReusableView.swift; sourceTree = "<group>"; };
 		E19069BC1AC1187400091A3F /* SmartCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartCollectionViewCell.swift; path = SmartViews/SmartCollectionViewCell.swift; sourceTree = "<group>"; };
 		E19069BD1AC1187400091A3F /* SmartTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartTableViewCell.swift; path = SmartViews/SmartTableViewCell.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				E19F65741ABA700E0003A968 /* Demo */,
 				E19F65771ABA703C0003A968 /* Smart Views */,
 				E19F65761ABA70310003A968 /* Data Sources */,
+				E164287A1B6F129B00867139 /* Messaging */,
 				E14D84191AAFC682008C9CB1 /* Supporting Files */,
 			);
 			path = Atoms;
@@ -125,7 +128,7 @@
 		E14D842E1AAFC682008C9CB1 /* AtomsTests */ = {
 			isa = PBXGroup;
 			children = (
-				E14D84311AAFC682008C9CB1 /* AtomsTests.swift */,
+				E12DD51F1B6FAA5800C6C9EF /* MessageRouterTests.swift */,
 				E14D842F1AAFC682008C9CB1 /* Supporting Files */,
 			);
 			path = AtomsTests;
@@ -137,6 +140,14 @@
 				E14D84301AAFC682008C9CB1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E164287A1B6F129B00867139 /* Messaging */ = {
+			isa = PBXGroup;
+			children = (
+				E164287B1B6F134700867139 /* MessageRouter.swift */,
+			);
+			name = Messaging;
 			sourceTree = "<group>";
 		};
 		E19F65741ABA700E0003A968 /* Demo */ = {
@@ -291,6 +302,7 @@
 				E19069CA1AC1188100091A3F /* ReorderableDataSource.swift in Sources */,
 				E19069C91AC1188100091A3F /* IndexableDataSource.swift in Sources */,
 				E19F656D1ABA670D0003A968 /* WordCell.swift in Sources */,
+				E164287C1B6F134700867139 /* MessageRouter.swift in Sources */,
 				E19069C01AC1187400091A3F /* SmartTableViewCell.swift in Sources */,
 				E14D841C1AAFC682008C9CB1 /* AppDelegate.swift in Sources */,
 				E19069BE1AC1187400091A3F /* SmartCollectionReusableView.swift in Sources */,
@@ -301,7 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E14D84321AAFC682008C9CB1 /* AtomsTests.swift in Sources */,
+				E12DD5201B6FAA5800C6C9EF /* MessageRouterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +434,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Atoms/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -433,6 +446,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Atoms/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
