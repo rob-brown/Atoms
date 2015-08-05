@@ -7,7 +7,7 @@ public class DownloadPipeOperation: PipeOperation<Requestable,NSURL> {
     private var task: NSURLSessionDownloadTask?
     private let internalQueue = NSOperationQueue()
     
-    public override init(input: Requestable?) {
+    public override init(input: Requestable? = nil) {
         super.init(input: input)
     }
     
@@ -39,7 +39,7 @@ extension DownloadPipeOperation: NSURLSessionDelegate, NSURLSessionDownloadDeleg
     
     public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
         let dir = NSTemporaryDirectory()
-        let fileName = downloadTask.response?.suggestedFilename ?? NSUUID().UUIDString
+        let fileName = NSUUID().UUIDString + (downloadTask.response?.suggestedFilename ?? "")
         let path = dir.stringByAppendingPathComponent(fileName)
         let destination = NSURL.fileURLWithPath(path)
 

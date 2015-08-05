@@ -6,7 +6,7 @@ public class URLSessionTaskPipeOperation: PipeOperation<NSURLSessionTask,Void> {
     
     private var task: NSURLSessionTask? = nil
     
-    public override init(input: NSURLSessionTask?) {
+    public override init(input: NSURLSessionTask? = nil) {
         assert(input == nil || input?.state == .Suspended, "Tasks must be suspended.")
         super.init(input: input)
     }

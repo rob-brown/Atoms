@@ -5,7 +5,7 @@ public class LocationPipeOperation: PipeOperation<CLLocationAccuracy,CLLocation>
     
     private var manager: CLLocationManager?
     
-    public override init(input: CLLocationAccuracy?) {
+    public override init(input: CLLocationAccuracy? = nil) {
         super.init(input: input)
         addCondition(LocationCondition(usage: .WhenInUse))
         addCondition(MutuallyExclusive<CLLocationManager>())

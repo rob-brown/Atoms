@@ -65,6 +65,8 @@
 		E1BFD65A1B347DD00057B622 /* AlertOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BFD6591B347DD00057B622 /* AlertOperation.swift */; };
 		E1C46A6E1B33021100281824 /* LocationPipeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C46A6D1B33021100281824 /* LocationPipeOperation.swift */; };
 		E1D85D1F1B71B557003F2206 /* MessageRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D85D1E1B71B557003F2206 /* MessageRouterTests.swift */; };
+		E1D85D211B71C002003F2206 /* ImageRouletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D85D201B71C002003F2206 /* ImageRouletteViewController.swift */; };
+		E1D85D231B71C017003F2206 /* CoreImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D85D221B71C017003F2206 /* CoreImageViewController.swift */; };
 		E1F4914C1AC22DB7000A4744 /* SequenceableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4914B1AC22DB7000A4744 /* SequenceableDataSource.swift */; };
 		E1FDA4DA1B35028500D38741 /* PipeSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FDA4D91B35028500D38741 /* PipeSegment.swift */; };
 		E1FDA4DC1B36F39700D38741 /* ImageReadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FDA4DB1B36F39700D38741 /* ImageReadOperation.swift */; };
@@ -146,6 +148,8 @@
 		E1BFD6591B347DD00057B622 /* AlertOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertOperation.swift; path = Operations/AlertOperation.swift; sourceTree = "<group>"; };
 		E1C46A6D1B33021100281824 /* LocationPipeOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationPipeOperation.swift; path = Operations/LocationPipeOperation.swift; sourceTree = "<group>"; };
 		E1D85D1E1B71B557003F2206 /* MessageRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageRouterTests.swift; sourceTree = "<group>"; };
+		E1D85D201B71C002003F2206 /* ImageRouletteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRouletteViewController.swift; sourceTree = "<group>"; };
+		E1D85D221B71C017003F2206 /* CoreImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreImageViewController.swift; sourceTree = "<group>"; };
 		E1F4914B1AC22DB7000A4744 /* SequenceableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SequenceableDataSource.swift; path = DataSourceCombinators/SequenceableDataSource.swift; sourceTree = "<group>"; };
 		E1FDA4D91B35028500D38741 /* PipeSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PipeSegment.swift; path = Operations/PipeSegment.swift; sourceTree = "<group>"; };
 		E1FDA4DB1B36F39700D38741 /* ImageReadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageReadOperation.swift; path = Operations/ImageReadOperation.swift; sourceTree = "<group>"; };
@@ -342,6 +346,8 @@
 				E19F656C1ABA670D0003A968 /* WordCell.swift */,
 				E19F65721ABA6CDF0003A968 /* WordCollectionCell.swift */,
 				E19F65681ABA56610003A968 /* OptionTableViewController.swift */,
+				E1D85D201B71C002003F2206 /* ImageRouletteViewController.swift */,
+				E1D85D221B71C017003F2206 /* CoreImageViewController.swift */,
 				E14D841F1AAFC682008C9CB1 /* Main.storyboard */,
 				E19F656E1ABA68680003A968 /* WordCell.xib */,
 				E19F65701ABA6BCE0003A968 /* WordCollectionCell.xib */,
@@ -492,6 +498,7 @@
 				E1BFD6571B347DA40057B622 /* BackgroundObserver.swift in Sources */,
 				E17B4FDB1B2E0AD20036F7AE /* CloudCondition.swift in Sources */,
 				E17B4FE81B2E0AD20036F7AE /* Operation.swift in Sources */,
+				E1D85D211B71C002003F2206 /* ImageRouletteViewController.swift in Sources */,
 				E14D841E1AAFC682008C9CB1 /* ViewController.swift in Sources */,
 				E19069C61AC1188100091A3F /* BaseDataSource.swift in Sources */,
 				E19F65691ABA56610003A968 /* OptionTableViewController.swift in Sources */,
@@ -505,6 +512,7 @@
 				E1FDA4DC1B36F39700D38741 /* ImageReadOperation.swift in Sources */,
 				E17B4FF31B2E0AD20036F7AE /* UserNotificationCondition.swift in Sources */,
 				E17B4FF11B2E0AD20036F7AE /* UIUserNotifications+Operations.swift in Sources */,
+				E1D85D231B71C017003F2206 /* CoreImageViewController.swift in Sources */,
 				E17B4FDD1B2E0AD20036F7AE /* DelayOperation.swift in Sources */,
 				E1F4914C1AC22DB7000A4744 /* SequenceableDataSource.swift in Sources */,
 				E17B4FDA1B2E0AD20036F7AE /* CKContainer+Operations.swift in Sources */,
@@ -613,7 +621,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -652,7 +660,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -666,7 +674,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Atoms/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.robertbrown.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -679,7 +687,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = Atoms/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.robertbrown.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -699,7 +707,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = AtomsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.robertbrown.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -716,7 +724,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = AtomsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.robertbrown.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

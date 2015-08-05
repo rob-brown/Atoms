@@ -3,7 +3,7 @@ import UIKit
 
 public class ImageReadOperation: PipeOperation<NSURL,UIImage> {
     
-    public override init(input: NSURL?) {
+    public override init(input: NSURL? = nil) {
         super.init(input: input)
     }
     
