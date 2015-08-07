@@ -18,6 +18,7 @@
 		E15BBF1E1B344F6600140D3E /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15BBF1D1B344F6600140D3E /* Requestable.swift */; };
 		E164287C1B6F134700867139 /* MessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E164287B1B6F134700867139 /* MessageRouter.swift */; };
 		E16980DF1B2FC85200BB8DD3 /* PipeClosureOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16980DE1B2FC85200BB8DD3 /* PipeClosureOperation.swift */; };
+		E16E76551B7449CA0024CBCF /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16E76541B7449CA0024CBCF /* Image.swift */; };
 		E1765ED31B2E31E5003CDBCF /* PipeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1765ED21B2E31E5003CDBCF /* PipeOperation.swift */; };
 		E17A3EEE1B641DFA00A9C55D /* CoreImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17A3EED1B641DFA00A9C55D /* CoreImageOperation.swift */; };
 		E17B4FD71B2E0AD20036F7AE /* BlockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17B4FBA1B2E0AD20036F7AE /* BlockObserver.swift */; };
@@ -45,6 +46,7 @@
 		E17B4FF11B2E0AD20036F7AE /* UIUserNotifications+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17B4FD41B2E0AD20036F7AE /* UIUserNotifications+Operations.swift */; };
 		E17B4FF21B2E0AD20036F7AE /* URLSessionTaskOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17B4FD51B2E0AD20036F7AE /* URLSessionTaskOperation.swift */; };
 		E17B4FF31B2E0AD20036F7AE /* UserNotificationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17B4FD61B2E0AD20036F7AE /* UserNotificationCondition.swift */; };
+		E18326171B743A70002D5F3A /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18326161B743A70002D5F3A /* FiltersViewController.swift */; };
 		E19069BE1AC1187400091A3F /* SmartCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19069BB1AC1187400091A3F /* SmartCollectionReusableView.swift */; };
 		E19069BF1AC1187400091A3F /* SmartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19069BC1AC1187400091A3F /* SmartCollectionViewCell.swift */; };
 		E19069C01AC1187400091A3F /* SmartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19069BD1AC1187400091A3F /* SmartTableViewCell.swift */; };
@@ -101,6 +103,7 @@
 		E15BBF1D1B344F6600140D3E /* Requestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Requestable.swift; path = Operations/Requestable.swift; sourceTree = "<group>"; };
 		E164287B1B6F134700867139 /* MessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageRouter.swift; path = Messaging/MessageRouter.swift; sourceTree = "<group>"; };
 		E16980DE1B2FC85200BB8DD3 /* PipeClosureOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PipeClosureOperation.swift; path = Operations/PipeClosureOperation.swift; sourceTree = "<group>"; };
+		E16E76541B7449CA0024CBCF /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Image.swift; path = Operations/Image.swift; sourceTree = "<group>"; };
 		E1765ED21B2E31E5003CDBCF /* PipeOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PipeOperation.swift; path = Operations/PipeOperation.swift; sourceTree = "<group>"; };
 		E17A3EED1B641DFA00A9C55D /* CoreImageOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreImageOperation.swift; path = Operations/CoreImageOperation.swift; sourceTree = "<group>"; };
 		E17B4FBA1B2E0AD20036F7AE /* BlockObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BlockObserver.swift; path = Operations/BlockObserver.swift; sourceTree = "<group>"; };
@@ -128,6 +131,7 @@
 		E17B4FD41B2E0AD20036F7AE /* UIUserNotifications+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIUserNotifications+Operations.swift"; path = "Operations/UIUserNotifications+Operations.swift"; sourceTree = "<group>"; };
 		E17B4FD51B2E0AD20036F7AE /* URLSessionTaskOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSessionTaskOperation.swift; path = Operations/URLSessionTaskOperation.swift; sourceTree = "<group>"; };
 		E17B4FD61B2E0AD20036F7AE /* UserNotificationCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserNotificationCondition.swift; path = Operations/UserNotificationCondition.swift; sourceTree = "<group>"; };
+		E18326161B743A70002D5F3A /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		E19069BB1AC1187400091A3F /* SmartCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartCollectionReusableView.swift; path = SmartViews/SmartCollectionReusableView.swift; sourceTree = "<group>"; };
 		E19069BC1AC1187400091A3F /* SmartCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartCollectionViewCell.swift; path = SmartViews/SmartCollectionViewCell.swift; sourceTree = "<group>"; };
 		E19069BD1AC1187400091A3F /* SmartTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmartTableViewCell.swift; path = SmartViews/SmartTableViewCell.swift; sourceTree = "<group>"; };
@@ -265,6 +269,7 @@
 				E1FDA4DD1B36F98800D38741 /* ImageScaleOperation.swift */,
 				E17A3EED1B641DFA00A9C55D /* CoreImageOperation.swift */,
 				E15BBF1D1B344F6600140D3E /* Requestable.swift */,
+				E16E76541B7449CA0024CBCF /* Image.swift */,
 				E1FDA4D91B35028500D38741 /* PipeSegment.swift */,
 			);
 			name = Pipe;
@@ -348,6 +353,7 @@
 				E19F65681ABA56610003A968 /* OptionTableViewController.swift */,
 				E1D85D201B71C002003F2206 /* ImageRouletteViewController.swift */,
 				E1D85D221B71C017003F2206 /* CoreImageViewController.swift */,
+				E18326161B743A70002D5F3A /* FiltersViewController.swift */,
 				E14D841F1AAFC682008C9CB1 /* Main.storyboard */,
 				E19F656E1ABA68680003A968 /* WordCell.xib */,
 				E19F65701ABA6BCE0003A968 /* WordCollectionCell.xib */,
@@ -492,6 +498,7 @@
 				E17A3EEE1B641DFA00A9C55D /* CoreImageOperation.swift in Sources */,
 				E1765ED31B2E31E5003CDBCF /* PipeOperation.swift in Sources */,
 				E17B4FEA1B2E0AD20036F7AE /* OperationErrors.swift in Sources */,
+				E18326171B743A70002D5F3A /* FiltersViewController.swift in Sources */,
 				E1BFD65A1B347DD00057B622 /* AlertOperation.swift in Sources */,
 				E19F65731ABA6CDF0003A968 /* WordCollectionCell.swift in Sources */,
 				E19069C71AC1188100091A3F /* ChainableDataSource.swift in Sources */,
@@ -517,6 +524,7 @@
 				E1F4914C1AC22DB7000A4744 /* SequenceableDataSource.swift in Sources */,
 				E17B4FDA1B2E0AD20036F7AE /* CKContainer+Operations.swift in Sources */,
 				E1FDA4DE1B36F98800D38741 /* ImageScaleOperation.swift in Sources */,
+				E16E76551B7449CA0024CBCF /* Image.swift in Sources */,
 				E19F656D1ABA670D0003A968 /* WordCell.swift in Sources */,
 				E164287C1B6F134700867139 /* MessageRouter.swift in Sources */,
 				E17B4FD71B2E0AD20036F7AE /* BlockObserver.swift in Sources */,

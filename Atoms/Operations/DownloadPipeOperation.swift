@@ -19,7 +19,7 @@ public class DownloadPipeOperation: PipeOperation<Requestable,NSURL> {
         guard let request = input.request() else {
             let message = "No request for input: \(input)"
             let userInfo = [NSLocalizedDescriptionKey : message]
-            let error = NSError(domain: NSStringFromClass(self.dynamicType), code: __LINE__, userInfo: userInfo)
+            let error = NSError(domain: __FILE__, code: __LINE__, userInfo: userInfo)
             finishWithError(error)
             return
         }

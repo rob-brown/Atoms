@@ -1,18 +1,17 @@
 import UIKit
 import CoreImage
 
-public class CoreImageOperation: PipeOperation<UIImage,UIImage> {
+public class CoreImageOperation: PipeOperation<Image,Image> {
     private let filter: CIFilter
     
-    public init(image: UIImage? = nil, filter: CIFilter) {
+    public init(image: Image? = nil, filter: CIFilter) {
         self.filter = filter
         super.init(input: image)
     }
     
-    public override func executeSync(input: UIImage) -> UIImage? {
-        guard let inputImage = CIImage(image: input) else { return nil }
+    public override func executeSync(input: Image) -> Image? {
+        guard let inputImage = input.CoreImageImage() else { return nil }
         filter.setValue(inputImage, forKey: kCIInputImageKey)
-        let filteredImage = filter.outputImage
-        return UIImage(CIImage: filteredImage)
+        return filter.outputImage
     }
 }

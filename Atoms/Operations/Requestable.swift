@@ -25,27 +25,3 @@ extension String: Requestable {
         return nil
     }
 }
-
-//public struct FileURL {
-////    public let url: NSURL
-////    
-////    private init?(path: String) {
-////        if let url = NSURL.fileURLWithPath(path) {
-////            self.url = url
-////        }
-////        else {
-////            return nil
-////        }
-////    }
-//}
-//
-//public struct RemoteURL {
-//    
-//}
-//
-//public enum URL {
-//    case File(FileURL)
-//    case Remote(RemoteURL)
-//    
-//    
-//}
