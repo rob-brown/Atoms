@@ -18,7 +18,7 @@ class CoreImageViewController: UIViewController {
     private let queue = OperationQueue()
     private var image: UIImage? {
         didSet {
-            filterImage(image, filters: filterNames)
+            filterNames.removeAll()
         }
     }
     private var filterNames = Set<String>() {
@@ -43,69 +43,42 @@ class CoreImageViewController: UIViewController {
         }
     }
     
-    private func filterImage(image: UIImage?, filters: Set<String>) {
-        guard let image = image else { return }
-        
-        // If no filters, just show the unfiltered image.
-        if filters.count == 0 {
-            imageView?.image = image
+    private func filterImage(unfilteredImage: UIImage?, filters: Set<String>) {
+        guard let image = unfilteredImage where filters.count > 0 else {
+            imageView?.image = unfilteredImage
             return
         }
         
-        activityIndicator?.startAnimating()
+        var operations = [PipeOperation<Image,Image>]()
         
-        // ???: Should the operation pipelining be encapsulated into a function?
-        // I could give the function a list of operations and a queue.
-        
-//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            var firstOperation: CoreImageOperation?
-            var previousSeries: PipeSeries<Image,Image,Image,Image>?
-            
-            for filterName in filters {
-                if let filter = CIFilter(name: filterName) {
-                    let operation = CoreImageOperation(image: image, filter: filter)
-                    if let previous = previousSeries {
-                        previousSeries = previous |> operation
-                    }
-                    else if let firstOperation = firstOperation {
-                        previousSeries = firstOperation |> operation
-                    }
-                    else {
-                        firstOperation = operation
-                    }
-                }
+        for filterName in filters {
+            if let filter = CIFilter(name: filterName) {
+                let operation = CoreImageOperation(image: image, filter: filter)
+                operations.append(operation)
             }
-            
-            if let previousSeries = previousSeries {
-                previousSeries
-                    |> self.updateImageOperation()
-                    |> self.queue
-            }
-            else if let firstOperation = firstOperation {
-                firstOperation
-                    |> self.updateImageOperation()
-                    |> self.queue
-//            }
         }
+        
+        operations.append(updateImageOperation())
+        activityIndicator?.startAnimating()
+        queue.runUniformPipeline(operations)
     }
     
-    private func updateImageOperation() -> PipeOperation<Image,Void> {
-        return PipeClosureOperation<Image,Void> { image in
+    private func updateImageOperation() -> PipeOperation<Image,Image> {
+        return PipeClosureOperation<Image,Image> { image, token in
             // Renders the image in the background.
             backgroundQueue {
-                if let ciImage = image.CoreImageImage() {
-                    let cgImage = self.context.createCGImage(ciImage, fromRect: ciImage.extent)
-                    let uiImage = UIImage(CGImage: cgImage)
-                    let decodedImage = uiImage.predecodedImage()
-                    
-                    // Sets the image on the main queue.
-                    mainQueue {
-                        self.imageView?.image = decodedImage
-                        self.activityIndicator?.stopAnimating()
-                    }
+                guard let ciImage = image.CoreImageImage() where token.isCanceled() == false else { return }
+                let cgImage = self.context.createCGImage(ciImage, fromRect: ciImage.extent)
+                let decodedImage = UIImage.predecodedImage(cgImage: cgImage)
+                
+                // Sets the image on the main queue.
+                mainQueue {
+                    guard token.isCanceled() == false else { return }
+                    self.imageView?.image = decodedImage
+                    self.activityIndicator?.stopAnimating()
                 }
             }
-            return ()
+            return image
         }
     }
 }
@@ -138,35 +111,34 @@ extension CoreImageViewController: UIImagePickerControllerDelegate, UINavigation
 
 extension UIImage {
     
-    public func predecodedImage() -> UIImage? {
-        return UIImagePNGRepresentation(self).flatMap(UIImage.predecodedImage)
+    public class func predecodedImage(uiImage uiImage: UIImage) -> UIImage? {
+        guard let cgImage = uiImage.CGImage else { return nil }
+        return predecodedImage(cgImage: cgImage)
     }
     
-    public class func predecodedImage(data: NSData) -> UIImage? {
-        return CGDataProviderCreateWithCFData(data).flatMap(imageWithDataProvider)
+    public class func predecodedImage(data data: NSData) -> UIImage? {
+        guard let provider = CGDataProviderCreateWithCFData(data) else { return nil }
+        return predecodedImage(dataProvider: provider)
     }
     
-    public class func imageWithDataProvider(dataProvider: CGDataProviderRef) -> UIImage? {
+    public class func predecodedImage(dataProvider dataProvider: CGDataProviderRef) -> UIImage? {
+        guard let image = CGImageCreateWithPNGDataProvider(dataProvider, nil, false, .RenderingIntentDefault) ??
+            CGImageCreateWithJPEGDataProvider(dataProvider, nil, false, .RenderingIntentDefault) else { return nil }
+        return predecodedImage(cgImage: image)
+    }
+    
+    public class func predecodedImage(cgImage cgImage: CGImageRef) -> UIImage? {
+        let width = CGImageGetWidth(cgImage)
+        let height = CGImageGetHeight(cgImage)
+        let rect = CGRectMake(0.0, 0.0, CGFloat(width), CGFloat(height))
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let info = CGImageAlphaInfo.PremultipliedFirst.rawValue | CGBitmapInfo.ByteOrder32Little.rawValue
+        let imageContext = CGBitmapContextCreate(nil, width, height, 8, width * 4, colorSpace, info)
         
-        let cgImage = CGImageCreateWithPNGDataProvider(dataProvider, nil, false, .RenderingIntentDefault) ??
-            CGImageCreateWithJPEGDataProvider(dataProvider, nil, false, .RenderingIntentDefault)
+        CGContextDrawImage(imageContext, rect, cgImage)
         
-        if let cgImage = cgImage {
-            let width = CGImageGetWidth(cgImage)
-            let height = CGImageGetHeight(cgImage)
-            let rect = CGRectMake(0.0, 0.0, CGFloat(width), CGFloat(height))
-            let colorSpace = CGColorSpaceCreateDeviceRGB()
-            let info = CGImageAlphaInfo.PremultipliedFirst.rawValue | CGBitmapInfo.ByteOrder32Little.rawValue
-            let imageContext = CGBitmapContextCreate(nil, width, height, 8, width * 4, colorSpace, info)
-            
-            CGContextDrawImage(imageContext, rect, cgImage)
-            
-            if let outputImage = CGBitmapContextCreateImage(imageContext) {
-                let image = UIImage(CGImage: outputImage)
-                return image
-            }
-        }
-        
-        return nil
+        guard let bitmap = CGBitmapContextCreateImage(imageContext) else { return nil }
+        let image = UIImage(CGImage: bitmap)
+        return image
     }
 }

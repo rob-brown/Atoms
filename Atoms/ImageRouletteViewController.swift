@@ -37,7 +37,7 @@ class ImageRouletteViewController: UIViewController {
     }
     
     private func extractWordOperation() -> PipeOperation<NSURL,String> {
-        return PipeClosureOperation<NSURL,String> { url in
+        return PipeClosureOperation<NSURL,String> { url, _ in
             defer {
                 do {
                     try NSFileManager.defaultManager().removeItemAtURL(url)
@@ -54,7 +54,7 @@ class ImageRouletteViewController: UIViewController {
     }
     
     private func setWordOperation() -> PipeOperation<String,String> {
-        return PipeClosureOperation<String,String> { word in
+        return PipeClosureOperation<String,String> { word, _ in
             dispatch_async(dispatch_get_main_queue()) {
                 self.wordLabel.text = word
             }
@@ -69,7 +69,7 @@ class ImageRouletteViewController: UIViewController {
     }
     
     private func parseImageJSONOperation() -> PipeOperation<NSURL,Requestable> {
-        return PipeClosureOperation<NSURL,Requestable> { url in
+        return PipeClosureOperation<NSURL,Requestable> { url, _ in
             do {
                 guard let data = NSData(contentsOfURL: url) else { return nil }
                 guard let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as? NSDictionary else { return nil }
@@ -83,7 +83,7 @@ class ImageRouletteViewController: UIViewController {
     }
     
     private func setImageOperation() -> PipeOperation<UIImage,Void> {
-        return PipeClosureOperation<UIImage,Void> { image in
+        return PipeClosureOperation<UIImage,Void> { image, _ in
             dispatch_async(dispatch_get_main_queue()) {
                 self.imageView.image = image
             }

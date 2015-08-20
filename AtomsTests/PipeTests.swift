@@ -9,7 +9,7 @@ class PipeTests: XCTestCase {
     
     func testDirectToQueue() {
         asyncTest("Test Pipeline") { finish in
-            PipeClosureOperation<Int,Void>(1){ XCTAssertEqual($0, 1, "Direct to queue failed."); finish(); return () }
+            PipeClosureOperation<Int,Void>(1){ n, _ in XCTAssertEqual(n, 1, "Direct to queue failed."); finish(); return () }
                 |> self.queue
         }
     }
@@ -20,7 +20,7 @@ class PipeTests: XCTestCase {
                 |> PipeClosureOperation<Int,Int>{ $0 * 3 }
                 |> PipeClosureOperation<Int,Int>{ $0 * 2 }
                 |> PipeClosureOperation<Int,Int>{ $0 / 2 }
-                |> PipeClosureOperation<Int,Void>{ XCTAssertEqual($0, 6, "Pipeline failed."); finish(); return () }
+                |> PipeClosureOperation<Int,Void>{ n, _ in XCTAssertEqual(n, 6, "Pipeline failed."); finish(); return () }
                 |> self.queue
         }
     }
@@ -32,7 +32,7 @@ class PipeTests: XCTestCase {
                 |> PipeClosureOperation<Int,Int>{ $0 * 3 }
                 |> PipeClosureOperation<Int,Int>{ $0 * 2 }
                 |> PipeClosureOperation<Int,Int>{ $0 / 2 }
-                |> PipeClosureOperation<Int,Void>{ XCTAssertEqual($0, 6, "Pipeline failed."); finish(); return () }
+                |> PipeClosureOperation<Int,Void>{ n, _ in XCTAssertEqual(n, 6, "Pipeline failed."); finish(); return () }
                 |> self.queue
         }
     }
@@ -42,7 +42,7 @@ class PipeTests: XCTestCase {
     func testLocationPipeOperation() {
         asyncTest("Test Location Pipe Operation") { finish in
             LocationPipeOperation(input: kCLLocationAccuracyThreeKilometers)
-                |> PipeClosureOperation<CLLocation,Void> { location in
+                |> PipeClosureOperation<CLLocation,Void> { (location: CLLocation) in
                     // Asserts the location is in London, England.
                     // If the simulated location changes in the settings, this test needs to change.
                     XCTAssertEqualWithAccuracy(location.coordinate.latitude, 51.5, accuracy: 0.1)
@@ -65,9 +65,9 @@ class PipeTests: XCTestCase {
         asyncTest("Test Scale Operation") { finish in
             ImageReadOperation(input: url)
                 |> ImageScaleOperation(size: size)
-                |> PipeClosureOperation<UIImage,Void>{
-                    XCTAssertEqual($0.size.width, size.width)
-                    XCTAssertEqual($0.size.height, size.height)
+                |> PipeClosureOperation<UIImage,Void>{ (resizedImage: UIImage) in
+                    XCTAssertEqual(resizedImage.size.width, size.width)
+                    XCTAssertEqual(resizedImage.size.height, size.height)
                     finish()
                     return ()
                 }
@@ -84,9 +84,9 @@ class PipeTests: XCTestCase {
         asyncTest("Test Resize Operation") { finish in
             ImageReadOperation(input: url)
                 |> ImageScaleOperation(scale: scale)
-                |> PipeClosureOperation<UIImage,Void>{
-                    XCTAssertEqual($0.size.width, image.size.width * scale)
-                    XCTAssertEqual($0.size.height, image.size.height * scale)
+                |> PipeClosureOperation<UIImage,Void>{ (scaledImage: UIImage) in
+                    XCTAssertEqual(scaledImage.size.width, image.size.width * scale)
+                    XCTAssertEqual(scaledImage.size.height, image.size.height * scale)
                     finish()
                     return ()
                 }

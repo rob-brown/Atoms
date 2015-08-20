@@ -10,12 +10,14 @@
 		E12150DE1B33B45A005C74DF /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12150DD1B33B45A005C74DF /* TestHelpers.swift */; };
 		E12150E01B33B8EF005C74DF /* URLSessionTaskPipeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12150DF1B33B8EF005C74DF /* URLSessionTaskPipeOperation.swift */; };
 		E12150E21B33BF39005C74DF /* DownloadPipeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12150E11B33BF39005C74DF /* DownloadPipeOperation.swift */; };
+		E1475D651B7AB80C0020642D /* CancelToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1475D641B7AB80C0020642D /* CancelToken.swift */; };
 		E14D841C1AAFC682008C9CB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D841B1AAFC682008C9CB1 /* AppDelegate.swift */; };
 		E14D841E1AAFC682008C9CB1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D841D1AAFC682008C9CB1 /* ViewController.swift */; };
 		E14D84211AAFC682008C9CB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E14D841F1AAFC682008C9CB1 /* Main.storyboard */; };
 		E14D84231AAFC682008C9CB1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E14D84221AAFC682008C9CB1 /* Images.xcassets */; };
 		E14D84261AAFC682008C9CB1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E14D84241AAFC682008C9CB1 /* LaunchScreen.xib */; };
 		E15BBF1E1B344F6600140D3E /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15BBF1D1B344F6600140D3E /* Requestable.swift */; };
+		E1605ECB1B85746B0083BFC8 /* OperationQueuePipeOperationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1605ECA1B85746B0083BFC8 /* OperationQueuePipeOperationExtensions.swift */; };
 		E164287C1B6F134700867139 /* MessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E164287B1B6F134700867139 /* MessageRouter.swift */; };
 		E16980DF1B2FC85200BB8DD3 /* PipeClosureOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16980DE1B2FC85200BB8DD3 /* PipeClosureOperation.swift */; };
 		E16E76551B7449CA0024CBCF /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16E76541B7449CA0024CBCF /* Image.swift */; };
@@ -91,6 +93,7 @@
 		E12150DD1B33B45A005C74DF /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		E12150DF1B33B8EF005C74DF /* URLSessionTaskPipeOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSessionTaskPipeOperation.swift; path = Operations/URLSessionTaskPipeOperation.swift; sourceTree = "<group>"; };
 		E12150E11B33BF39005C74DF /* DownloadPipeOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadPipeOperation.swift; path = Operations/DownloadPipeOperation.swift; sourceTree = "<group>"; };
+		E1475D641B7AB80C0020642D /* CancelToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancelToken.swift; path = Operations/CancelToken.swift; sourceTree = "<group>"; };
 		E14D84161AAFC682008C9CB1 /* Atoms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Atoms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E14D841A1AAFC682008C9CB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E14D841B1AAFC682008C9CB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +104,7 @@
 		E14D842B1AAFC682008C9CB1 /* AtomsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtomsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E14D84301AAFC682008C9CB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E15BBF1D1B344F6600140D3E /* Requestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Requestable.swift; path = Operations/Requestable.swift; sourceTree = "<group>"; };
+		E1605ECA1B85746B0083BFC8 /* OperationQueuePipeOperationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationQueuePipeOperationExtensions.swift; path = Operations/OperationQueuePipeOperationExtensions.swift; sourceTree = "<group>"; };
 		E164287B1B6F134700867139 /* MessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageRouter.swift; path = Messaging/MessageRouter.swift; sourceTree = "<group>"; };
 		E16980DE1B2FC85200BB8DD3 /* PipeClosureOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PipeClosureOperation.swift; path = Operations/PipeClosureOperation.swift; sourceTree = "<group>"; };
 		E16E76541B7449CA0024CBCF /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Image.swift; path = Operations/Image.swift; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 		E142BF4C1B1E6D45009B4D66 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				E1475D641B7AB80C0020642D /* CancelToken.swift */,
 				E17B4FB91B2E0A910036F7AE /* Advanced Operations */,
 				E17B4F7C1B2E09B30036F7AE /* Pipe */,
 			);
@@ -260,6 +265,7 @@
 		E17B4F7C1B2E09B30036F7AE /* Pipe */ = {
 			isa = PBXGroup;
 			children = (
+				E1605ECA1B85746B0083BFC8 /* OperationQueuePipeOperationExtensions.swift */,
 				E1765ED21B2E31E5003CDBCF /* PipeOperation.swift */,
 				E16980DE1B2FC85200BB8DD3 /* PipeClosureOperation.swift */,
 				E1C46A6D1B33021100281824 /* LocationPipeOperation.swift */,
@@ -497,6 +503,8 @@
 				E17B4FDF1B2E0AD20036F7AE /* ExclusivityController.swift in Sources */,
 				E17A3EEE1B641DFA00A9C55D /* CoreImageOperation.swift in Sources */,
 				E1765ED31B2E31E5003CDBCF /* PipeOperation.swift in Sources */,
+				E1475D651B7AB80C0020642D /* CancelToken.swift in Sources */,
+				E1605ECB1B85746B0083BFC8 /* OperationQueuePipeOperationExtensions.swift in Sources */,
 				E17B4FEA1B2E0AD20036F7AE /* OperationErrors.swift in Sources */,
 				E18326171B743A70002D5F3A /* FiltersViewController.swift in Sources */,
 				E1BFD65A1B347DD00057B622 /* AlertOperation.swift in Sources */,

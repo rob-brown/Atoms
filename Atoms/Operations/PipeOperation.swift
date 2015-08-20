@@ -92,15 +92,19 @@ public class PipeOperation<I,O>: Operation {
         }
         finish()
     }
+    
+    public class func runPipeline(operations: [PipeOperation]) {
+        
+    }
 }
 
 
 // MARK: - Intermediate Pipeline Processing
 
 public class PipeSeries<I,O,X,Y> {
-    private let firstOperation: PipeOperation<I,X>
-    private let lastOperation: PipeOperation<Y,O>
-    private let operations: [NSOperation]
+    public let firstOperation: PipeOperation<I,X>
+    public let lastOperation: PipeOperation<Y,O>
+    public let operations: [NSOperation]
     
     public init(operations: [NSOperation], firstOperation: PipeOperation<I,X>, lastOperation: PipeOperation<Y,O>) {
         self.firstOperation = firstOperation
