@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Atoms"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "Simple, reusable components."
   s.description  = <<-DESC
                    A collection of simple, reusable components.

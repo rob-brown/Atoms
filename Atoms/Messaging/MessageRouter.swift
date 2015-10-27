@@ -49,6 +49,9 @@ public class MessageRouter<T> {
     /// The current list of recipients.
     private var entries = [MessageRouterEntry<T>]()
     
+    /// Basic init.
+    public init() {}
+    
     /**
     Convenience function for add(_:_:). Simply takes a function that will 
     receive all messages for the life time of this instance, or until the
