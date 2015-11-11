@@ -38,7 +38,7 @@ public class ChainableDataSource: BaseDataSource {
     
     internal var dataSource: ChainableDataSource?
     
-    override init(_ collection: [[Element]], cellCreator: CellCreator) {
+    override public init(_ collection: [[Element]], cellCreator: CellCreator) {
         super.init(collection, cellCreator: cellCreator)
     }
     

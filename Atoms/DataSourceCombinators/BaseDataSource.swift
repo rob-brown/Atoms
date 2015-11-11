@@ -48,7 +48,7 @@ public class BaseDataSource: NSObject, UITableViewDataSource, UICollectionViewDa
     }
     private var updateClosures: [ChangeUpdater] = []
     
-    init(_ collection: [[Element]], cellCreator: CellCreator) {
+    public init(_ collection: [[Element]], cellCreator: CellCreator) {
         self.collection = collection
         self.cellCreator = cellCreator
     }

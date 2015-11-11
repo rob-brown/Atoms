@@ -46,7 +46,7 @@ public class FilterableDataSource: ChainableDataSource {
     }
     private let filter: Filter
     
-    init(_ dataSource: ChainableDataSource, filter: Filter) {
+    public init(_ dataSource: ChainableDataSource, filter: Filter) {
         self.filter = filter
         super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
         self.dataSource = dataSource

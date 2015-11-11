@@ -38,7 +38,7 @@ public class IndexableDataSource: ChainableDataSource {
    
     private let indexedSelector: Selector
     
-    init(_ dataSource: ChainableDataSource, indexedSelector: Selector) {
+    public init(_ dataSource: ChainableDataSource, indexedSelector: Selector) {
         self.indexedSelector = indexedSelector
         super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
         self.dataSource = dataSource

@@ -34,23 +34,46 @@
 
 import Foundation
 
+
 public class PipeClosureOperation<I,O>: PipeOperation<I,O> {
-    private let closure: (I, CancelToken)->(O?)
-    private let cancelToken = CancelToken()
     
-    public convenience init(_ input: I? = nil, _ closure: (I)->(O?)) {
-        self.init(input) { input, _ in
+    public typealias PipeClosureOperationAsyncClosure = (I, CancelToken)->(O?)  // TODO: Add the finish function.
+    public typealias PipeClosureOperationSyncClosure = (I)->(O?)
+    
+    private let closure: PipeClosureOperationAsyncClosure
+    private let cancelToken = CancelToken()
+    private let async: Bool
+    
+    private convenience init(_ input: I? = nil, _ closure: (I)->(O?)) {
+        self.init(input, async: false) { input, _ in
             closure(input)
         }
     }
     
-    public init(_ input: I? = nil, _ closure: (I, CancelToken)->(O?)) {
+    private init(_ input: I? = nil, async: Bool = true, _ closure: PipeClosureOperationAsyncClosure) {
         self.closure = closure
+        self.async = async
         super.init(input: input)
+    }
+    
+    public class func async(input: I? = nil, _ closure: PipeClosureOperationAsyncClosure) -> PipeClosureOperation<I,O> {
+        return PipeClosureOperation(input, closure)
+    }
+    
+    public class func sync(input: I? = nil, _ closure: PipeClosureOperationSyncClosure) -> PipeClosureOperation<I,O> {
+        return PipeClosureOperation(input, closure)
+    }
+    
+    override func concurrencyType() -> PipeOperationConcurrencyType {
+        return async ? .Asynchronous : .Synchronous
     }
     
     public override func executeSync(input: I) -> O? {
         return closure(input, cancelToken)
+    }
+    
+    public override func executeAsync(input: I) {
+        closure(input, cancelToken)  // TODO: Hand this a finish function.
     }
     
     public override func cancelWithError(error: NSError?) {

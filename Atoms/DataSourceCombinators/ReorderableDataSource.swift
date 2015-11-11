@@ -36,7 +36,7 @@ import UIKit
 
 public class ReorderableDataSource: ChainableDataSource {
     
-    init(_ dataSource: ChainableDataSource) {
+    public init(_ dataSource: ChainableDataSource) {
         super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
         self.dataSource = dataSource
         dataSource.registerForChanges() {
