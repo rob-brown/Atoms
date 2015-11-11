@@ -40,8 +40,8 @@ public class BaseDataSource: NSObject, UITableViewDataSource, UICollectionViewDa
     public typealias SupplementCreator = ((Any, NSIndexPath, String) -> Any)
     public typealias ChangeUpdater = (()->())
     
-    var cellCreator: CellCreator
-    var collection: [[Element]] = [[]] {
+    public var cellCreator: CellCreator
+    public var collection: [[Element]] = [[]] {
         didSet(oldValue) {
             notify()
         }

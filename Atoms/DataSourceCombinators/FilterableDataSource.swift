@@ -39,7 +39,7 @@ public class FilterableDataSource: ChainableDataSource {
     public typealias Context = Element
     public typealias Filter = ((Context?, [[Element]]) -> [[Element]])
     
-    var context: Context? = nil {
+    public var context: Context? = nil {
         didSet(oldValue) {
             update()
         }
