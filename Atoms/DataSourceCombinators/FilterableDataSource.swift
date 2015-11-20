@@ -48,8 +48,7 @@ public class FilterableDataSource: ChainableDataSource {
     
     public init(_ dataSource: ChainableDataSource, filter: Filter) {
         self.filter = filter
-        super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
-        self.dataSource = dataSource
+        super.init(dataSource: dataSource)
         dataSource.registerForChanges() {
             self.update()
         }

@@ -37,8 +37,7 @@ import UIKit
 public class ReorderableDataSource: ChainableDataSource {
     
     public init(_ dataSource: ChainableDataSource) {
-        super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
-        self.dataSource = dataSource
+        super.init(dataSource: dataSource)
         dataSource.registerForChanges() {
             self.update()
         }
@@ -61,6 +60,6 @@ public class ReorderableDataSource: ChainableDataSource {
     // MARK: Helpers
     
     private func update() {
-        collection = dataSource!.collection
+        collection = dataSource?.collection ?? collection
     }
 }

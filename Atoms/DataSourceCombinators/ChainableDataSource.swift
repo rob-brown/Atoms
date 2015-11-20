@@ -35,11 +35,15 @@
 import UIKit
 
 public class ChainableDataSource: BaseDataSource {
-    
-    internal var dataSource: ChainableDataSource?
+    public private(set) var dataSource: ChainableDataSource?
     
     override public init(_ collection: [[Element]], cellCreator: CellCreator) {
         super.init(collection, cellCreator: cellCreator)
+    }
+    
+    public init(dataSource: ChainableDataSource) {
+        self.dataSource = dataSource
+        super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
     }
     
     // MARK: Forwarded UITableViewDataSource

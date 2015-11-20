@@ -40,8 +40,7 @@ public class IndexableDataSource: ChainableDataSource {
     
     public init(_ dataSource: ChainableDataSource, indexedSelector: Selector) {
         self.indexedSelector = indexedSelector
-        super.init(dataSource.collection, cellCreator: dataSource.cellCreator)
-        self.dataSource = dataSource
+        super.init(dataSource: dataSource)
         collection = populate(dataSource.collection)
         dataSource.registerForChanges() {
             self.collection = self.populate(dataSource.collection)
