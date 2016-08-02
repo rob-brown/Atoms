@@ -39,12 +39,13 @@ import Dispatch
 public typealias Recipient = AnyObject
 
 /**
-A class for sending messages of type T to the registered recipients. Built to be 
-a thread-safe, type-safe NSNotificationCenter replacement. Can also be a 
-replacement to many types of delegate callbacks.
-*/
+ A class for sending messages of type T to the registered recipients. Built to be
+ a thread-safe, type-safe NSNotificationCenter replacement. Can also be a
+ replacement to many types of delegate callbacks.
+ */
 public class MessageRouter<T> {
     public typealias MessageHandler = T->()
+    public typealias NoParameterHandler = ()->()
     
     /// The current list of recipients.
     private var entries = [MessageRouterEntry<T>]()
@@ -53,27 +54,27 @@ public class MessageRouter<T> {
     public init() {}
     
     /**
-    Convenience function for add(_:_:). Simply takes a function that will 
-    receive all messages for the life time of this instance, or until the
-    returned entry is removed.
-    
-    - parameter function: The function to receive any messages.
-    - returns: An opaque object that can be used to stop any further messages.
-    */
+     Convenience function for add(_:_:). Simply takes a function that will
+     receive all messages for the life time of this instance, or until the
+     returned entry is removed.
+     
+     - parameter function: The function to receive any messages.
+     - returns: An opaque object that can be used to stop any further messages.
+     */
     public func add(function: MessageHandler) -> MessageRouterEntry<T> {
         return add(self) { _ in function }
     }
     
     /**
-    The given function will receive any messages for the life time of `object`.
-    Typically called like this:
-    
-        recipients.add(self, self.dynamicType.handleMessage)
-    
-    - parameter object: The object that owns the given function.
-    - parameter function: The function that will be called with any messages. Typically a function on `object`.
-    - returns: An opaque object that can be used to stop any further messages.
-    */
+     The given function will receive any messages for the life time of `object`.
+     Typically called like this:
+     
+     recipients.add(self, self.dynamicType.handleMessage)
+     
+     - parameter object: The object that owns the given function.
+     - parameter function: The function that will be called with any messages. Typically a function on `object`.
+     - returns: An opaque object that can be used to stop any further messages.
+     */
     public func add<R: Recipient>(object: R, _ function: R->MessageHandler) -> MessageRouterEntry<T> {
         let entry = MessageRouterEntry(object: object, function: { function($0 as! R) })
         sync {
@@ -83,10 +84,54 @@ public class MessageRouter<T> {
     }
     
     /**
-    Removes the given entry from the list of recipients. 
+     Convenience function for perform(_:_:).
+     */
+    public func perform(function: NoParameterHandler) -> MessageRouterEntry<T> {
+        return add(self) { _ in function }
+    }
     
-    - parameter entry: The entry to remove.
-    */
+    /**
+     Performs the given function, ignoring the value sent.
+     
+     - parameter object: The object that owns the given function.
+     - parameter function: The function that will be called with any messages. Typically a function on `object`.
+     - returns: An opaque object that can be used to stop any further messages.
+     */
+    public func perform<R: Recipient>(object: R, _ function: R->NoParameterHandler) -> MessageRouterEntry<T> {
+        return add(object) { object in { _ in function(object)() }}
+    }
+    
+    /**
+     Convenience function for map(_:_:).
+     */
+    public func map<U>(mapper: T->U) -> MessageRouter<U> {
+        return map(self, mapper: mapper)
+    }
+    
+    /**
+     Creates a router that returns the new type created by `mapper`.
+     
+     - parameter object: The object that owns the given mapper.
+     - parameter mapper: The function that will be called with any messages and transform them to the new type.
+     - returns: A router that returns the new type created by `mapper`.
+     */
+    public func map<U, R: Recipient>(object: R, mapper: T->U) -> MessageRouter<U> {
+        let mappedRouter = MessageRouter<U>()
+        
+        add(object) { _ in
+            { value in
+                mappedRouter.send(mapper(value))
+            }
+        }
+        
+        return mappedRouter
+    }
+    
+    /**
+     Removes the given entry from the list of recipients.
+     
+     - parameter entry: The entry to remove.
+     */
     public func remove(entry: MessageRouterEntry<T>) {
         sync {
             self.entries = self.entries.filter { $0 !== entry }
@@ -94,10 +139,10 @@ public class MessageRouter<T> {
     }
     
     /**
-    Sends the given message to all the registered recipients.
-    
-    - parameter message: The message to send to the recipients.
-    */
+     Sends the given message to all the registered recipients.
+     
+     - parameter message: The message to send to the recipients.
+     */
     public func send(message: T) {
         var handlers = [MessageHandler]()
         
@@ -116,12 +161,12 @@ public class MessageRouter<T> {
     // MARK: - Helpers
     
     /**
-    Convenience method for getting a copy of the entries. This is intended only 
-    for testing. Since `entries` is private, it isn't visible to tests, even with 
-    the `@testable` keyword.
-    
-    - returns: A copy of the registered recipient entries.
-    */
+     Convenience method for getting a copy of the entries. This is intended only
+     for testing. Since `entries` is private, it isn't visible to tests, even with
+     the `@testable` keyword.
+     
+     - returns: A copy of the registered recipient entries.
+     */
     internal func copyEntries() -> [MessageRouterEntry<T>] {
         var entries = [MessageRouterEntry<T>]()
         
@@ -138,11 +183,11 @@ public class MessageRouter<T> {
     private let queue = dispatch_queue_create("com.robertbrown.Atoms.Messaging", DISPATCH_QUEUE_SERIAL)
     
     /**
-    Ensures that critical code is run synchronously.
-    This function must be called before accessing `entries`.
-    
-    - parameter function: The function containing the critical code.
-    */
+     Ensures that critical code is run synchronously.
+     This function must be called before accessing `entries`.
+     
+     - parameter function: The function containing the critical code.
+     */
     private func sync(function: ()->()) {
         dispatch_sync(queue, function)
     }
