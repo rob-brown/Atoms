@@ -34,19 +34,19 @@
 
 import UIKit
 
-public class FilterableDataSource: ChainableDataSource {
+open class FilterableDataSource: ChainableDataSource {
     
     public typealias Context = Element
     public typealias Filter = ((Context?, [[Element]]) -> [[Element]])
     
-    public var context: Context? = nil {
+    open var context: Context? = nil {
         didSet(oldValue) {
             update()
         }
     }
-    private let filter: Filter
+    fileprivate let filter: Filter
     
-    public init(_ dataSource: ChainableDataSource, filter: Filter) {
+    public init(_ dataSource: ChainableDataSource, filter: @escaping Filter) {
         self.filter = filter
         super.init(dataSource: dataSource)
         dataSource.registerForChanges() {
@@ -56,27 +56,27 @@ public class FilterableDataSource: ChainableDataSource {
     
     // MARK: UITableViewDataSource
     
-    public override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    open override func numberOfSections(in tableView: UITableView) -> Int {
         return collection.count
     }
     
-    public override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return collection[section].count
     }
     
     // MARK: UICollectionViewDataSource
     
-    public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    open override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return collection.count
     }
     
-    public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collection[section].count
     }
     
     // MARK: Helpers
     
-    private func update() {
+    fileprivate func update() {
         collection = filter(context, dataSource!.collection)
     }
 }

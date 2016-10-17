@@ -38,7 +38,7 @@ class WordCell: SmartTableViewCell {
 
     @IBOutlet weak var wordLabel: UILabel!
     
-    class func cell(tableView: UITableView, word: String) -> Self {
+    class func cell(_ tableView: UITableView, word: String) -> Self {
         let cell = self.cell(tableView)
         cell.wordLabel.text = word
         return cell

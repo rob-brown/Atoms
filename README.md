@@ -6,7 +6,7 @@ An atom is an element that can't be subdivided any further and still retain it's
 
 ## Requirements
 
-`Atoms` uses Swift 2.0. 
+`Atoms` uses Swift 3.0. 
 
 ## Components
 

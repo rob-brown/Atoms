@@ -2,7 +2,7 @@ import XCTest
 @testable import Atoms
 
 class MessageRouterTests: XCTestCase {
-    private var router: MessageRouter<Int>!
+    fileprivate var router: MessageRouter<Int>!
     
     override func setUp() {
         super.setUp()
@@ -18,7 +18,7 @@ class MessageRouterTests: XCTestCase {
     func testAddRecipient() {
         XCTAssertEqual(router.copyEntries().count, 0)
         let recipient = MessageRouterTestHelper()
-        router.add(recipient, recipient.dynamicType.doNothing)
+        router.add(recipient, type(of: recipient).doNothing)
         XCTAssertEqual(router.copyEntries().count, 1)
     }
     
@@ -33,7 +33,7 @@ class MessageRouterTests: XCTestCase {
     func testRemoveRecipient() {
         XCTAssertEqual(router.copyEntries().count, 0)
         let recipient = MessageRouterTestHelper()
-        let entry = router.add(recipient, recipient.dynamicType.doNothing)
+        let entry = router.add(recipient, type(of: recipient).doNothing)
         XCTAssertEqual(router.copyEntries().count, 1)
         router.remove(entry)
         XCTAssertEqual(router.copyEntries().count, 0)
@@ -57,24 +57,24 @@ class MessageRouterTests: XCTestCase {
     func testSendTuple() {
         var count = 0
         let tupleRouter = MessageRouter<(String, Int)>()
-        tupleRouter.add { (_: String, _: Int) in count++ }
+        tupleRouter.add { (_: String, _: Int) in count += 1 }
         tupleRouter.send(("Hello", 42))
         XCTAssertEqual(count, 1)
     }
     
     func testSendAfterDeinit() {
-        let expectation = expectationWithDescription("testSendAfterDeinit")
+        let expectation = self.expectation(description: "testSendAfterDeinit")
         
         // Dispatches to another queue to create a new scope.
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        dispatch_async(queue) {
+        let queue = DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
+        queue.async {
             
             // Creates a recipient in this scope.
             let recipient = MessageRouterTestHelper()
-            self.router.add(recipient, recipient.dynamicType.fail)
+            self.router.add(recipient, type(of: recipient).fail)
             
             // Dispatches again to create a new scope without the recipient.
-            dispatch_async(queue) {
+            queue.async {
                 // Sends a message that won't be received because the recipient deinited.
                 self.router.send(42)
                 expectation.fulfill()
@@ -83,19 +83,19 @@ class MessageRouterTests: XCTestCase {
             // The recipient will get deinited here.
         }
         
-        waitForExpectationsWithTimeout(3) { error in XCTAssertNil(error, "testSendAfterDeinit timed out") }
+        waitForExpectations(timeout: 3) { error in XCTAssertNil(error, "testSendAfterDeinit timed out") }
     }
     
     // MARK: - Helpers
     
-    private func send(recipientCount recipientCount: Int, messageCount: Int) {
+    fileprivate func send(recipientCount: Int, messageCount: Int) {
         var count = 0
         let message = 42
         
         // Adds n recipients.
         if recipientCount > 0 {
             for _ in 1...recipientCount {
-                router.add { n in count++; XCTAssertEqual(n, message) }
+                router.add { n in count += 1; XCTAssertEqual(n, message) }
             }
         }
         
@@ -112,9 +112,9 @@ class MessageRouterTests: XCTestCase {
 
 private class MessageRouterTestHelper {
     
-    private func fail(_: Int) {
+    fileprivate func fail(_: Int) {
         XCTFail("Should not be called.")
     }
     
-    private func doNothing(_: Int) {}
+    fileprivate func doNothing(_: Int) {}
 }

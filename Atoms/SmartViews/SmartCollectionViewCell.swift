@@ -37,11 +37,11 @@ import UIKit
 class SmartCollectionViewCell: UICollectionViewCell {
     
     class func nib() -> UINib? {
-        let bundle = NSBundle(forClass: self)
+        let bundle = Bundle(for: self)
         
         // The path check is to ensure that the file exists.
         // UINib doesn't verify the nib's existence.
-        if bundle.pathForResource(self.nibName(), ofType: "nib") == nil {
+        if bundle.path(forResource: self.nibName(), ofType: "nib") == nil {
             return nil;
         }
         
@@ -53,21 +53,21 @@ class SmartCollectionViewCell: UICollectionViewCell {
     }
     
     class func cellIdentifier() -> String {
-        return NSStringFromClass(self).componentsSeparatedByString(".").last!
+        return NSStringFromClass(self).components(separatedBy: ".").last!
     }
     
-    class func cell(collectionView: UICollectionView, indexPath: NSIndexPath, reuseID: String? = nil, nib: UINib? = nil) -> Self {
+    class func cell(_ collectionView: UICollectionView, indexPath: IndexPath, reuseID: String? = nil, nib: UINib? = nil) -> Self {
         return createCell(collectionView, indexPath: indexPath, reuseID: reuseID, nib: nib)
     }
     
-    private class func createCell<C where C: SmartCollectionViewCell>(collectionView: UICollectionView, indexPath: NSIndexPath, reuseID: String? = nil, nib: UINib? = nil) -> C {
+    fileprivate class func createCell<C>(_ collectionView: UICollectionView, indexPath: IndexPath, reuseID: String? = nil, nib: UINib? = nil) -> C where C: SmartCollectionViewCell {
         
         let identifier = reuseID ?? self.cellIdentifier()
         
         if let nib = self.nib() {
-            collectionView.registerNib(nib, forCellWithReuseIdentifier: identifier)
+            collectionView.register(nib, forCellWithReuseIdentifier: identifier)
         }
         
-        return collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! C
+        return collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! C
     }
 }

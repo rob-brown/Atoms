@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Atoms"
-  s.version      = "0.0.9"
+  s.version      = "0.1.0"
   s.summary      = "Simple, reusable components."
   s.description  = <<-DESC
                    A collection of simple, reusable components.
@@ -24,9 +24,5 @@ Pod::Spec.new do |s|
 
   s.subspec 'Messaging' do |ss|
     ss.source_files = "Atoms/Messaging/**/*.{h,m,swift}"
-  end
-
-  s.subspec 'Operations' do |ss|
-    ss.source_files = "Atoms/Operations/**/*.{h,m,swift}"
   end
 end

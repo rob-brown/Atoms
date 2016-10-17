@@ -38,7 +38,7 @@ class WordCollectionCell: SmartCollectionViewCell {
 
     @IBOutlet weak var wordLabel: UILabel!
     
-    class func cell(collectionView: UICollectionView, indexPath: NSIndexPath, word: String) -> Self {
+    class func cell(_ collectionView: UICollectionView, indexPath: IndexPath, word: String) -> Self {
         let cell = self.cell(collectionView, indexPath: indexPath)
         cell.wordLabel.text = word
         return cell

@@ -34,7 +34,7 @@
 
 import UIKit
 
-public class ReorderableDataSource: ChainableDataSource {
+open class ReorderableDataSource: ChainableDataSource {
     
     public init(_ dataSource: ChainableDataSource) {
         super.init(dataSource: dataSource)
@@ -45,21 +45,21 @@ public class ReorderableDataSource: ChainableDataSource {
     
     // MARK: UITableViewDataSource
     
-    public override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    open override func tableView(_ tableView: UITableView, canEditRowAtIndexPath indexPath: IndexPath) -> Bool {
         return true
     }
     
-    public override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    open override func tableView(_ tableView: UITableView, canMoveRowAtIndexPath indexPath: IndexPath) -> Bool {
         return true
     }
     
-    public override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+    open override func tableView(_ tableView: UITableView, moveRowAtIndexPath sourceIndexPath: IndexPath, toIndexPath destinationIndexPath: IndexPath) {
         move(from: sourceIndexPath, to: destinationIndexPath)
     }
     
     // MARK: Helpers
     
-    private func update() {
+    fileprivate func update() {
         collection = dataSource?.collection ?? collection
     }
 }

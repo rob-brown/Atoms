@@ -34,9 +34,9 @@
 
 import UIKit
 
-public class IndexableDataSource: ChainableDataSource {
+open class IndexableDataSource: ChainableDataSource {
    
-    private let indexedSelector: Selector
+    fileprivate let indexedSelector: Selector
     
     public init(_ dataSource: ChainableDataSource, indexedSelector: Selector) {
         self.indexedSelector = indexedSelector
@@ -49,37 +49,37 @@ public class IndexableDataSource: ChainableDataSource {
     
     // MARK: UITableViewDataSource
     
-    public override func sectionIndexTitlesForTableView(tableView: UITableView) -> [Element]! {
-        return UILocalizedIndexedCollation.currentCollation().sectionIndexTitles
+    open override func sectionIndexTitlesForTableView(_ tableView: UITableView) -> [Element]! {
+        return UILocalizedIndexedCollation.current().sectionIndexTitles as [BaseDataSource.Element]!
     }
     
-    public override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        return UILocalizedIndexedCollation.currentCollation().sectionForSectionIndexTitleAtIndex(index)
+    open override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+        return UILocalizedIndexedCollation.current().section(forSectionIndexTitle: index)
     }
     
-    public override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return UILocalizedIndexedCollation.currentCollation().sectionTitles[section]
+    open override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return UILocalizedIndexedCollation.current().sectionTitles[section]
     }
     
     // MARK: Helpers
     
-    private func populate(sections: [[Element]]) -> [[Element]] {
+    fileprivate func populate(_ sections: [[Element]]) -> [[Element]] {
         
         // Uses ObjC mutable collections since Swift is too slow for large data sets.
-        let count = UILocalizedIndexedCollation.currentCollation().sectionTitles.count
+        let count = UILocalizedIndexedCollation.current().sectionTitles.count
         let newSections = NSMutableArray(capacity: count)
         
         // Creates an array of empty mutable arrays.
         for _ in 0..<count {
-            newSections.addObject(NSMutableArray())
+            newSections.add(NSMutableArray())
         }
         
         // Puts all the objects in the right buckets.
         for list in sections {
             for object in list {
-                let index = UILocalizedIndexedCollation.currentCollation().sectionForObject(object, collationStringSelector: indexedSelector)
+                let index = UILocalizedIndexedCollation.current().section(for: object, collationStringSelector: indexedSelector)
                 let targetList = newSections[index] as! NSMutableArray
-                targetList.addObject(object)
+                targetList.add(object)
             }
         }
 
@@ -88,7 +88,7 @@ public class IndexableDataSource: ChainableDataSource {
         
         for index in 0..<count {
             let list = newSections[index] as! [Element]
-            let sorted = UILocalizedIndexedCollation.currentCollation().sortedArrayFromArray(list, collationStringSelector: self.indexedSelector) as [Element]
+            let sorted = UILocalizedIndexedCollation.current().sortedArray(from: list, collationStringSelector: self.indexedSelector) as [Element]
             swiftSections += [sorted]
         }
         

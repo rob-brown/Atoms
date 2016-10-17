@@ -36,22 +36,22 @@ import UIKit
 
 class FiltersViewController: UITableViewController {
 
-    private(set) var filters = Set<String>()
+    fileprivate(set) var filters = Set<String>()
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRow(at: indexPath)
         
         if let title = cell?.textLabel?.text {
-            let filterName = "CI" + title.stringByReplacingOccurrencesOfString(" ", withString: "")
+            let filterName = "CI" + title.replacingOccurrences(of: " ", with: "")
             if filters.contains(filterName) {
                 filters.remove(filterName)
-                cell?.accessoryType = .None
+                cell?.accessoryType = .none
             }
             else {
                 filters.insert(filterName)
-                cell?.accessoryType = .Checkmark
+                cell?.accessoryType = .checkmark
             }
         }
     }

@@ -37,11 +37,11 @@ import UIKit
 class SmartCollectionReusableView: UICollectionReusableView {
     
     class func nib() -> UINib? {
-        let bundle = NSBundle(forClass: self)
+        let bundle = Bundle(for: self)
         
         // The path check is to ensure that the file exists.
         // UINib doesn't verify the nib's existence.
-        if bundle.pathForResource(self.nibName(), ofType: "nib") == nil {
+        if bundle.path(forResource: self.nibName(), ofType: "nib") == nil {
             return nil;
         }
         
@@ -53,21 +53,21 @@ class SmartCollectionReusableView: UICollectionReusableView {
     }
     
     class func cellIdentifier() -> String {
-        return NSStringFromClass(self).componentsSeparatedByString(".").last!
+        return NSStringFromClass(self).components(separatedBy: ".").last!
     }
     
-    class func cell(collectionView: UICollectionView, indexPath: NSIndexPath, kind: String, reuseID: String? = nil, nib: UINib? = nil) -> Self {
+    class func cell(_ collectionView: UICollectionView, indexPath: IndexPath, kind: String, reuseID: String? = nil, nib: UINib? = nil) -> Self {
         return createView(collectionView, indexPath: indexPath, kind: kind, nib: nib)
     }
     
-    private class func createView<C where C: SmartCollectionReusableView>(collectionView: UICollectionView, indexPath: NSIndexPath, kind: String, reuseID: String? = nil, nib: UINib? = nil) -> C {
+    fileprivate class func createView<C>(_ collectionView: UICollectionView, indexPath: IndexPath, kind: String, reuseID: String? = nil, nib: UINib? = nil) -> C where C: SmartCollectionReusableView {
         
         let identifier = reuseID ?? self.cellIdentifier()
         
         if let nib = self.nib() {
-            collectionView.registerNib(nib, forSupplementaryViewOfKind: kind, withReuseIdentifier: identifier)
+            collectionView.register(nib, forSupplementaryViewOfKind: kind, withReuseIdentifier: identifier)
         }
         
-        return collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: identifier, forIndexPath: indexPath) as! C
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: identifier, for: indexPath) as! C
     }
 }

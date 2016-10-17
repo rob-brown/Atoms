@@ -34,10 +34,10 @@
 
 import UIKit
 
-public class ChainableDataSource: BaseDataSource {
-    public private(set) var dataSource: ChainableDataSource?
+open class ChainableDataSource: BaseDataSource {
+    open fileprivate(set) var dataSource: ChainableDataSource?
     
-    override public init(_ collection: [[Element]], cellCreator: CellCreator) {
+    override public init(_ collection: [[Element]], cellCreator: @escaping CellCreator) {
         super.init(collection, cellCreator: cellCreator)
     }
     
@@ -48,7 +48,7 @@ public class ChainableDataSource: BaseDataSource {
     
     // MARK: Forwarded UITableViewDataSource
     
-    public func sectionIndexTitlesForTableView(tableView: UITableView) -> [Element]! {
+    open func sectionIndexTitlesForTableView(_ tableView: UITableView) -> [Element]! {
         if let dataSource = dataSource {
             return dataSource.sectionIndexTitlesForTableView(tableView)
         }
@@ -56,7 +56,7 @@ public class ChainableDataSource: BaseDataSource {
         return []
     }
     
-    public func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+    open func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
         if let dataSource = dataSource {
             return dataSource.tableView(tableView, sectionForSectionIndexTitle: title, atIndex: index)
         }
@@ -64,7 +64,7 @@ public class ChainableDataSource: BaseDataSource {
         return 0
     }
     
-    public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let dataSource = dataSource {
             return dataSource.tableView(tableView, titleForHeaderInSection: section)
         }
@@ -72,7 +72,7 @@ public class ChainableDataSource: BaseDataSource {
         return nil
     }
     
-    public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if let dataSource = dataSource {
             return dataSource.tableView(tableView, titleForFooterInSection: section)
         }
@@ -80,7 +80,7 @@ public class ChainableDataSource: BaseDataSource {
         return nil
     }
     
-    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    open func tableView(_ tableView: UITableView, canEditRowAtIndexPath indexPath: IndexPath) -> Bool {
         if let dataSource = dataSource {
             return dataSource.tableView(tableView, canEditRowAtIndexPath: indexPath)
         }
@@ -88,7 +88,7 @@ public class ChainableDataSource: BaseDataSource {
         return false
     }
     
-    public func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    open func tableView(_ tableView: UITableView, canMoveRowAtIndexPath indexPath: IndexPath) -> Bool {
         if let dataSource = dataSource {
             return dataSource.tableView(tableView, canMoveRowAtIndexPath: indexPath)
         }
@@ -96,13 +96,13 @@ public class ChainableDataSource: BaseDataSource {
         return false
     }
     
-    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    open func tableView(_ tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: IndexPath) {
         if let dataSource = dataSource {
             dataSource.tableView(tableView, commitEditingStyle: editingStyle, forRowAtIndexPath: indexPath)
         }
     }
     
-    public func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+    open func tableView(_ tableView: UITableView, moveRowAtIndexPath sourceIndexPath: IndexPath, toIndexPath destinationIndexPath: IndexPath) {
         if let dataSource = dataSource {
             dataSource.tableView(tableView, moveRowAtIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
         }

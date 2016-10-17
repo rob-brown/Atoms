@@ -43,12 +43,12 @@ public typealias Recipient = AnyObject
  a thread-safe, type-safe NSNotificationCenter replacement. Can also be a
  replacement to many types of delegate callbacks.
  */
-public class MessageRouter<T> {
-    public typealias MessageHandler = T->()
+open class MessageRouter<T> {
+    public typealias MessageHandler = (T)->()
     public typealias NoParameterHandler = ()->()
     
     /// The current list of recipients.
-    private var entries = [MessageRouterEntry<T>]()
+    fileprivate var entries = [MessageRouterEntry<T>]()
     
     /// Basic init.
     public init() {}
@@ -61,7 +61,8 @@ public class MessageRouter<T> {
      - parameter function: The function to receive any messages.
      - returns: An opaque object that can be used to stop any further messages.
      */
-    public func add(function: MessageHandler) -> MessageRouterEntry<T> {
+    @discardableResult
+    open func add(_ function: @escaping MessageHandler) -> MessageRouterEntry<T> {
         return add(self) { _ in function }
     }
     
@@ -75,7 +76,8 @@ public class MessageRouter<T> {
      - parameter function: The function that will be called with any messages. Typically a function on `object`.
      - returns: An opaque object that can be used to stop any further messages.
      */
-    public func add<R: Recipient>(object: R, _ function: R->MessageHandler) -> MessageRouterEntry<T> {
+    @discardableResult
+    open func add<R: Recipient>(_ object: R, _ function: @escaping (R)->MessageHandler) -> MessageRouterEntry<T> {
         let entry = MessageRouterEntry(object: object, function: { function($0 as! R) })
         sync {
             self.entries += [entry]
@@ -86,7 +88,8 @@ public class MessageRouter<T> {
     /**
      Convenience function for perform(_:_:).
      */
-    public func perform(function: NoParameterHandler) -> MessageRouterEntry<T> {
+    @discardableResult
+    open func perform(_ function: @escaping NoParameterHandler) -> MessageRouterEntry<T> {
         return add(self) { _ in function }
     }
     
@@ -97,14 +100,15 @@ public class MessageRouter<T> {
      - parameter function: The function that will be called with any messages. Typically a function on `object`.
      - returns: An opaque object that can be used to stop any further messages.
      */
-    public func perform<R: Recipient>(object: R, _ function: R->NoParameterHandler) -> MessageRouterEntry<T> {
+    @discardableResult
+    open func perform<R: Recipient>(_ object: R, _ function: @escaping (R)->NoParameterHandler) -> MessageRouterEntry<T> {
         return add(object) { object in { _ in function(object)() }}
     }
     
     /**
      Convenience function for map(_:_:).
      */
-    public func map<U>(mapper: T->U) -> MessageRouter<U> {
+    @discardableResult open func map<U>(_ mapper: @escaping (T)->U) -> MessageRouter<U> {
         return map(self, mapper: mapper)
     }
     
@@ -115,7 +119,7 @@ public class MessageRouter<T> {
      - parameter mapper: The function that will be called with any messages and transform them to the new type.
      - returns: A router that returns the new type created by `mapper`.
      */
-    public func map<U, R: Recipient>(object: R, mapper: T->U) -> MessageRouter<U> {
+    @discardableResult open func map<U, R: Recipient>(_ object: R, mapper: @escaping (T)->U) -> MessageRouter<U> {
         let mappedRouter = MessageRouter<U>()
         
         add(object) { _ in
@@ -132,7 +136,7 @@ public class MessageRouter<T> {
      
      - parameter entry: The entry to remove.
      */
-    public func remove(entry: MessageRouterEntry<T>) {
+    open func remove(_ entry: MessageRouterEntry<T>) {
         sync {
             self.entries = self.entries.filter { $0 !== entry }
         }
@@ -143,7 +147,7 @@ public class MessageRouter<T> {
      
      - parameter message: The message to send to the recipients.
      */
-    public func send(message: T) {
+    open func send(_ message: T) {
         var handlers = [MessageHandler]()
         
         sync {
@@ -180,7 +184,7 @@ public class MessageRouter<T> {
     }
     
     /// Queue for handling synchronization for `entries`.
-    private let queue = dispatch_queue_create("com.robertbrown.Atoms.Messaging", DISPATCH_QUEUE_SERIAL)
+    fileprivate let queue = DispatchQueue(label: "com.robertbrown.Atoms.Messaging", attributes: [])
     
     /**
      Ensures that critical code is run synchronously.
@@ -188,20 +192,20 @@ public class MessageRouter<T> {
      
      - parameter function: The function containing the critical code.
      */
-    private func sync(function: ()->()) {
-        dispatch_sync(queue, function)
+    fileprivate func sync(_ function: ()->()) {
+        queue.sync(execute: function)
     }
 }
 
 /// Opaque object for tracking message recipient info.
-public class MessageRouterEntry<T> {
-    private typealias MessageHandlerProducer = Recipient->MessageHandler
-    private typealias MessageHandler = T->()
+open class MessageRouterEntry<T> {
+    fileprivate typealias MessageHandlerProducer = (Recipient)->MessageHandler
+    fileprivate typealias MessageHandler = (T)->()
     
-    private weak var object: Recipient?
-    private let function: MessageHandlerProducer
+    fileprivate weak var object: Recipient?
+    fileprivate let function: MessageHandlerProducer
     
-    private init(object: Recipient? = nil, function: MessageHandlerProducer) {
+    fileprivate init(object: Recipient? = nil, function: @escaping MessageHandlerProducer) {
         self.object = object
         self.function = function
     }

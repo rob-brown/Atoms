@@ -2,14 +2,14 @@ import XCTest
 
 extension XCTestCase {
     
-    public func asyncTest(name: String = "Test", duration: NSTimeInterval = 10, closure: (()->())->()) {
-        let expectation = expectationWithDescription(name)
+    public func asyncTest(_ name: String = "Test", duration: TimeInterval = 10, closure: (()->())->()) {
+        let expectation = self.expectation(description: name)
         
         closure {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(duration) { error in
+        waitForExpectations(timeout: duration) { error in
             XCTAssertNil(error, "Failed \(name)")
         }
     }

@@ -45,11 +45,11 @@ class SmartTableViewCell: UITableViewCell {
     }
     
     class func nib() -> UINib? {
-        let bundle = NSBundle(forClass: self)
+        let bundle = Bundle(for: self)
         
         // The path check is to ensure that the file exists.
         // UINib doesn't verify the nib's existence.
-        if bundle.pathForResource(self.nibName(), ofType: "nib") == nil {
+        if bundle.path(forResource: self.nibName(), ofType: "nib") == nil {
             return nil;
         }
         
@@ -61,27 +61,27 @@ class SmartTableViewCell: UITableViewCell {
     }
     
     class func cellIdentifier() -> String {
-        return NSStringFromClass(self).componentsSeparatedByString(".").last!
+        return NSStringFromClass(self).components(separatedBy: ".").last!
     }
     
     class func cellStyle() -> UITableViewCellStyle {
-        return UITableViewCellStyle.Default
+        return UITableViewCellStyle.default
     }
 
-    class func cell(tableView: UITableView, reuseID: String? = nil, nib: UINib? = nil) -> Self {
+    class func cell(_ tableView: UITableView, reuseID: String? = nil, nib: UINib? = nil) -> Self {
         return createCell(tableView, reuseID: reuseID, nib: nib)
     }
     
-    private class func createCell<C where C: SmartTableViewCell>(tableView: UITableView, reuseID: String? = nil, nib: UINib? = nil) -> C {
+    fileprivate class func createCell<C>(_ tableView: UITableView, reuseID: String? = nil, nib: UINib? = nil) -> C where C: SmartTableViewCell {
         
         let identifier = reuseID ?? self.cellIdentifier()
         
-        if let cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? C {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? C {
             return cell
         }
         
         if let nib = self.nib() {
-            if let cell = nib.instantiateWithOwner(nil, options: nil).first as? C {
+            if let cell = nib.instantiate(withOwner: nil, options: nil).first as? C {
                 return cell
             }
         }

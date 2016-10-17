@@ -50,10 +50,10 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         super.viewDidLoad()
         
         // From: /usr/share/dict/words
-        let path = NSBundle.mainBundle().pathForResource("words.txt", ofType: nil)!
-        let data = NSData(contentsOfFile: path)!
-        let string = NSString(data: data, encoding: NSUTF8StringEncoding)
-        words = (string?.componentsSeparatedByString("\n"))!
+        let path = Bundle.main.path(forResource: "words.txt", ofType: nil)!
+        let data = try! Data(contentsOf: URL(fileURLWithPath: path))
+        let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        words = (string?.components(separatedBy: "\n"))!
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,7 +64,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         }
     }
     
-    override func setEditing(editing: Bool, animated: Bool) {
+    override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         tableView?.setEditing(editing, animated: animated)
         tableView?.reloadData()
@@ -74,7 +74,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
     // Lots of code here to dynamically adapt to any combination of chains.
     // Normally this setup won't be as long.
     
-    private func updateDataSource(useCollectionView: Bool, useFilter: Bool, useReorder: Bool, useIndex: Bool) {
+    fileprivate func updateDataSource(_ useCollectionView: Bool, useFilter: Bool, useReorder: Bool, useIndex: Bool) {
         clearDataSources()
         setUpUI(useCollectionView, useFilter, useReorder)
         setUpRoot()
@@ -95,7 +95,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         collectionView?.reloadData()
     }
     
-    private func setUpUI(useCollectionView: Bool, _ useFilter: Bool, _ useReorder: Bool) {
+    fileprivate func setUpUI(_ useCollectionView: Bool, _ useFilter: Bool, _ useReorder: Bool) {
         tableView?.removeFromSuperview()
         collectionView?.removeFromSuperview()
         
@@ -107,21 +107,21 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         }
     }
     
-    private func setUpTableView(useFilter: Bool, _ useReorder: Bool) {
-        let tableView = UITableView(frame: CGRectZero, style: .Plain)
+    fileprivate func setUpTableView(_ useFilter: Bool, _ useReorder: Bool) {
+        let tableView = UITableView(frame: CGRect.zero, style: .plain)
         tableView.delegate = self
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .Top, relatedBy: .Equal, toItem: self.topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .Left, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .Right, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .left, relatedBy: .equal, toItem: self.view, attribute: .left, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: tableView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1, constant: 0))
         self.tableView = tableView
         
         if useFilter {
             let height = 44 as CGFloat
-            let width = CGRectGetWidth(self.view.frame)
-            let searchBar = UISearchBar(frame: CGRectMake(0, 0, width, height))
+            let width = self.view.frame.width
+            let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: width, height: height))
             searchBar.placeholder = "Filter"
             searchBar.delegate = self
             tableView.tableHeaderView = searchBar
@@ -130,7 +130,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         
         if let optionsButton = optionsButton {
             if useReorder {
-                self.navigationItem.rightBarButtonItems = [editButtonItem(), optionsButton]
+                self.navigationItem.rightBarButtonItems = [editButtonItem, optionsButton]
             }
             else {
                 self.navigationItem.rightBarButtonItems = [optionsButton]
@@ -138,43 +138,43 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         }
     }
     
-    private func setUpCollectionView(useFilter: Bool) {
+    fileprivate func setUpCollectionView(_ useFilter: Bool) {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSizeMake(150, 50)
+        layout.itemSize = CGSize(width: 150, height: 50)
         layout.sectionInset = UIEdgeInsetsMake(20, 20, 0, 20)
-        let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.collectionViewLayout = layout
         collectionView.backgroundColor = UIColor(white: 0.9, alpha: 1)
         self.view.addSubview(collectionView)
-        self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .Left, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .Right, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .left, relatedBy: .equal, toItem: self.view, attribute: .left, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1, constant: 0))
         self.collectionView = collectionView
         
         if useFilter {
             let height = 44 as CGFloat
-            let width = CGRectGetWidth(self.view.frame)
-            let searchBar = UISearchBar(frame: CGRectMake(0, 0, width, height))
+            let width = self.view.frame.width
+            let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: width, height: height))
             searchBar.placeholder = "Filter"
             searchBar.delegate = self
             searchBar.translatesAutoresizingMaskIntoConstraints = false
             collectionView.addSubview(searchBar)
             self.view.addSubview(searchBar)
             self.searchBar = searchBar
-            self.view.addConstraint(NSLayoutConstraint(item: searchBar, attribute: .Top, relatedBy: .Equal, toItem: self.topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0))
-            self.view.addConstraint(NSLayoutConstraint(item: searchBar, attribute: .Left, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0))
-            self.view.addConstraint(NSLayoutConstraint(item: searchBar, attribute: .Right, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1, constant: 0))
-            self.view.addConstraint(NSLayoutConstraint(item: searchBar, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: height))
-            self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .Top, relatedBy: .Equal, toItem: searchBar, attribute: .Bottom, multiplier: 1, constant: 0))
+            self.view.addConstraint(NSLayoutConstraint(item: searchBar, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
+            self.view.addConstraint(NSLayoutConstraint(item: searchBar, attribute: .left, relatedBy: .equal, toItem: self.view, attribute: .left, multiplier: 1, constant: 0))
+            self.view.addConstraint(NSLayoutConstraint(item: searchBar, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1, constant: 0))
+            self.view.addConstraint(NSLayoutConstraint(item: searchBar, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height))
+            self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: searchBar, attribute: .bottom, multiplier: 1, constant: 0))
         }
         else {
-            self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .Top, relatedBy: .Equal, toItem: self.topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0))
+            self.view.addConstraint(NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
         }
     }
     
-    private func setUpRoot() {
-        rootDataSource = ChainableDataSource([words]) { (view, indexPath, word) -> Any in
+    fileprivate func setUpRoot() {
+        rootDataSource = ChainableDataSource([words as Array<AnyObject>]) { (view, indexPath, word) -> Any in
             if let word = word as? String {
                 if let tableView = view as? UITableView {
                     return WordCell.cell(tableView, word: word)
@@ -188,7 +188,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         }
     }
     
-    private func setUpIndex(use: Bool) {
+    fileprivate func setUpIndex(_ use: Bool) {
         if use == false {
             return
         }
@@ -196,7 +196,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         indexDataSource = IndexableDataSource(leafDataSource(), indexedSelector: "self")
     }
     
-    private func setUpReorder(use: Bool) {
+    fileprivate func setUpReorder(_ use: Bool) {
         if use == false {
             return
         }
@@ -204,7 +204,7 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         reorderDataSource = ReorderableDataSource(leafDataSource())
     }
     
-    private func setUpFilter(use: Bool) {
+    fileprivate func setUpFilter(_ use: Bool) {
         if use == false {
             return
         }
@@ -215,10 +215,10 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
                     return collection
                 }
                 
-                let normalizedQuery = query.lowercaseString
+                let normalizedQuery = query.lowercased()
                 
                 return collection.map() { section in
-                    return section.filter() {$0.lowercaseString.hasPrefix(normalizedQuery)}
+                    return section.filter() {$0.lowercased.hasPrefix(normalizedQuery)}
                 }
             }
             
@@ -226,45 +226,45 @@ class ViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate
         }
     }
     
-    private func clearDataSources() {
+    fileprivate func clearDataSources() {
         rootDataSource = nil
         filterDataSource = nil
         reorderDataSource = nil
         indexDataSource = nil
     }
     
-    private func leafDataSource() -> ChainableDataSource {
+    fileprivate func leafDataSource() -> ChainableDataSource {
         return filterDataSource ?? reorderDataSource ?? indexDataSource ?? rootDataSource!
     }
     
-    @IBAction func unwind(segue: UIStoryboardSegue) {
-        if let options = segue.sourceViewController as? OptionTableViewController {
-            let useCollectionView = options.collectionViewSwitch.on
-            let useFilter = options.filterSwitch.on
-            let useReorder = options.reorderSwitch.on
-            let useIndex = options.indexSwitch.on
+    @IBAction func unwind(_ segue: UIStoryboardSegue) {
+        if let options = segue.source as? OptionTableViewController {
+            let useCollectionView = options.collectionViewSwitch.isOn
+            let useFilter = options.filterSwitch.isOn
+            let useReorder = options.reorderSwitch.isOn
+            let useIndex = options.indexSwitch.isOn
             updateDataSource(useCollectionView, useFilter: useFilter, useReorder: useReorder, useIndex: useIndex)
         }
     }
     
     // MARK: UISearchBarDelegate
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
-            filterDataSource?.context = ""
+            filterDataSource?.context = "" as FilterableDataSource.Context?
         }
         
         self.setEditing(false, animated: true)
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        filterDataSource?.context = searchBar.text
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        filterDataSource?.context = searchBar.text as FilterableDataSource.Context?
     }
     
     // MARK: UITableViewDelegate
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .None
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .none
     }
 }
 
