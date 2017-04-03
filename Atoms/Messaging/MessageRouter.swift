@@ -90,7 +90,7 @@ open class MessageRouter<T> {
      */
     @discardableResult
     open func perform(_ function: @escaping NoParameterHandler) -> MessageRouterEntry<T> {
-        return add(self) { _ in function }
+        return perform(self) { _ in function }
     }
     
     /**
